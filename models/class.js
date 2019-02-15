@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Person = require('./person'); // Require in Person model
 
 const Class = new Schema({
   name: String,
