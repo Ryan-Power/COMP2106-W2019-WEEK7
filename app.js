@@ -4,8 +4,27 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var routes = require('./config/routes');
-
+var mongoose = require('mongoose');
 var app = express();
+
+// Connect to mongoose
+mongoose.connect(
+  'mongodb://user:password1@ds151293.mlab.com:51293/comp2106-week6',
+  {
+    useNewUrlParser: true
+  }
+);
+
+// Grab mongoose connection to 'listen' to error/open events
+var db = mongoose.connection;
+
+// When DB emits an 'error' console log the error
+db.on('error', console.error.bind(console, 'Connection Error'));
+
+// When DB emits 'open' console log connected only 1 time
+db.once('open', function(callback) {
+  console.log('Connected to mongodb');
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

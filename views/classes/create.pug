@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  .container
+    h1 Create a Class
+
+    form(method="post")
+      .form-group
+        label(for="name") Name:
+        input#name.form-control(type="text", name="name")
+      .form-group
+        label(for="courseCode") Course Code:
+        input#courseCode.form-control(type="text", name="courseCode")
+      .form-group
+        label(for="term") Term:
+        input#term.form-control(type="text", name="term")
+      .form-group
+        button.btn.btn-success(type="submit") Create Class
