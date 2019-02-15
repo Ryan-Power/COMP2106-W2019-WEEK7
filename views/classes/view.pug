@@ -1,0 +1,47 @@
+extends ../layout
+
+mixin sidebar(_class)
+  .card
+    .card-body
+      h3 Information
+      p Name: #{_class.name}
+      p Course Code: #{_class.courseCode}
+      p Students in class: #{_class.students.length}
+
+mixin studentRow(student)
+  .row
+    .col-md-4 #{student.firstName} #{student.lastName}
+    .col-md-2 #{student.studentNumber}
+    .col-md-4 #{student.program}
+
+block content
+  .container
+    #exampleModal.modal(tabindex="-1" role="dialog")
+      .modal-dialog(role='document')
+        .modal-content
+          form(method="post", action=`/classes/view/${_class.id}/student`)
+            .modal-header
+              h5.modal-title Modal title
+              button.close(type='button', data-dismiss='modal', aria-label='Close')
+                span(aria-hidden='true') ×
+            .modal-body
+              .form-group
+                label(for="first-name") First Name
+                input#first-name.form-control(type="text", name="firstName")
+              .form-group
+                label(for="last-name") Last Name
+                input#last-name.form-control(type="text", name="lastName")
+              .form-group
+                label(for="student-number") Student Number
+                input#student-number.form-control(type="text", name="studentNumber")
+            .modal-footer
+              button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
+              button.btn.btn-primary(type='submit') Submit
+    .row
+      .col-md-8
+        h1 Student List
+        button.btn.btn-primary(type="button" data-toggle="modal" data-target="#exampleModal") Create Student
+        each student in _class.students
+          +studentRow(student)
+      .col-md-4
+        +sidebar(_class)

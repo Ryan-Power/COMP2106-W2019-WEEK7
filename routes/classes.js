@@ -24,4 +24,26 @@ router.post('/create', (req, res, next) => {
   });
 });
 
+// Viewing a specific class by it's id
+router.get('/view/:id', (req, res, next) => {
+  // Using Mongoose find out class by it's ID
+  Class.findById(req.params.id).then(_class => {
+    res.render('classes/view', { _class });
+  });
+});
+
+router.post('/view/:id/student', (req, res, next) => {
+  Class.findById(req.params.id).then(_class => {
+    // const students = _class.students;
+    _class.students.push(req.body);
+
+    _class.save(err => {
+      if (err) return next(err);
+
+      return res.redirect(`/classes/view/${req.params.id}`);
+      // console.log()
+    });
+  });
+});
+
 module.exports = router;
