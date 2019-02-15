@@ -10,4 +10,4 @@ const Person = new Schema({
 });
 
 // Export model of our class Schema
-module.exports = mongoose.model('Person', Person);
+module.exports = Person;

@@ -7,4 +7,4 @@ const Program = new Schema({
 });
 
 // Export model of our class Schema
-module.exports = mongoose.model('Program', Program);
+module.exports = Program;
