@@ -5,7 +5,6 @@ const Class = require('../models/class');
 // GET /classes
 router.get('/', (req, res, next) => {
   Class.find().then(classes => {
-    console.log(classes.length);
     res.render('classes/list', { classes });
   });
 });

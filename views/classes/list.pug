@@ -1,6 +1,22 @@
 extends ../layout
 
+mixin outLineButton(link, text)
+  a.btn-btn-sm.btn-outline-secondary(href=link)= text
+
+mixin classMixin(_class)
+  .col-md-4
+    .card.mb-4.shadow-sm
+      .card-body
+        p.card-text #{_class.courseCode} - #{_class.name}
+        .d-flex.justify-content-between.align-items-center
+          .btn-group
+            +outLineButton(`/classes/view/${_class.id}`, 'View')
+            +outLineButton(`/classes/edit/${_class.id}`, 'Edit')
+
 block content
   .container
     h1 This is our Classes list
     a.btn.btn-primary(href="/classes/create") Create Class
+    .row
+      each _class in classes
+        +classMixin(_class)
