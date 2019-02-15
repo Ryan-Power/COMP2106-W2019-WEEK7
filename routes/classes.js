@@ -33,15 +33,35 @@ router.get('/view/:id', (req, res, next) => {
 });
 
 router.post('/view/:id/student', (req, res, next) => {
+  // Find class by it's ID in URL
   Class.findById(req.params.id).then(_class => {
-    // const students = _class.students;
+    // Because students is an array, we use push to create a new student
     _class.students.push(req.body);
 
+    // Save class
     _class.save(err => {
       if (err) return next(err);
 
       return res.redirect(`/classes/view/${req.params.id}`);
-      // console.log()
+    });
+  });
+});
+
+router.get('/view/:id/student/delete/:studentId', (req, res, next) => {
+  // Find class by it's ID in URL
+  Class.findById(req.params.id).then(_class => {
+    // Filter out the student with the ID matching studentId
+    const studentId = req.params.studentId;
+
+    _class.students = _class.students.filter(
+      student => student.id !== studentId
+    );
+
+    // Save class
+    _class.save(err => {
+      if (err) return next(err);
+
+      return res.redirect(`/classes/view/${req.params.id}`);
     });
   });
 });

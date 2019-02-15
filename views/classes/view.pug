@@ -13,6 +13,9 @@ mixin studentRow(student)
     .col-md-4 #{student.firstName} #{student.lastName}
     .col-md-2 #{student.studentNumber}
     .col-md-4 #{student.program}
+    .col-md-2
+      .btn-group
+        a(href=`/classes/view/${_class.id}/student/delete/${student.id}`) Delete
 
 block content
   .container
