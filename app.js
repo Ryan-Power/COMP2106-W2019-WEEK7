@@ -3,9 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var routes = require('./config/routes');
 
 var app = express();
 
@@ -19,8 +17,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Loop over each route in our config
+routes.forEach(function(route) {
+  // Use each route using path and controller
+  app.use(route.path, route.controller);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
